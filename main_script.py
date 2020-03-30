@@ -6,7 +6,7 @@ petit fichier hyper simple pour faire les plots
  
 @author: Dany
 """
-import gbio_example_script_collisions as gbio
+import gbio_example_script_collisions_dany as gbio
  
 # il faut modifier ces variables pour dire quoi faire (add prévaut sur zoom)
 
