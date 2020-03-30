@@ -3,10 +3,7 @@
 Created on Fri Mar 27 11:21:28 2020
 
 petit fichier hyper simple pour faire les plots
-
-ATTENTION: il faut run gbio_example_script_collisions une fois avant
-de faire quoi que ce soit ici (c'est normal si ça prend des plombes) 
-
+ 
 @author: Dany
 """
 import gbio_example_script_collisions as gbio
