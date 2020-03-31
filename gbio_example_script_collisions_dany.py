@@ -20,27 +20,26 @@ import Add
 
 # Fermeture des figures ouvertes
 plt.close('all')
-donnees_accX = {}
-donnees_GF = {} 
-donnees_LF = {}  
-donnees_dGF = {}
-to_cancel = {}
+donnees_accX = None 
+donnees_GF = None 
+donnees_LF = None  
+donnees_dGF = None
+to_cancel = None
 
 file=os.listdir("mesures") 
 subjects=[path.split('_')[0]+'_'+path.split('_')[1]+'_'+path.split('_')[2] for i,path in enumerate(file) if i%3 == 0] 
   
 # Double for-loop that runs through all subjects and trials 
 def make_plots(beginning,The_end,ntrials=3,Name='alex',add=False,zoom=False,chock_number=1,Trial=1):
-    global donnees_accX, donnees_GF, donnees_LF, donnees_dGF, subjects
+    global donnees_accX, donnees_GF, donnees_LF, donnees_dGF, to_cancel, subjects
     subjects = subjects[beginning:The_end]
     if add:
-        for s in subjects: 
-            name = s.split('_')[0] 
-            donnees_accX[name] = [[],[],[],[]] # haut avec, haut sans, bas avec, bas sans
-            donnees_GF[name] = [[],[],[],[]] 
-            donnees_LF[name] = [[],[],[],[]]  
-            donnees_dGF[name] = [[],[],[],[]] 
-            to_cancel[name] = [[],[],[],[]] 
+        for s in subjects:  
+            donnees_accX = [[],[],[],[]] # haut avec, haut sans, bas avec, bas sans
+            donnees_GF = [[],[],[],[]] 
+            donnees_LF = [[],[],[],[]]  
+            donnees_dGF = [[],[],[],[]] 
+            to_cancel = [[],[],[],[]] 
     elif zoom: 
         subjects = [subjects]         
     for s in subjects:
@@ -114,30 +113,30 @@ def make_plots(beginning,The_end,ntrials=3,Name='alex',add=False,zoom=False,choc
                 if add:  
                     if hb == 'haut': 
                         if block == 'avec':
-                            donnees_accX[name][0].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_GF[name][0].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_LF[name][0].append([LF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_dGF[name][0].append([dGF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            to_cancel[name][0].append([])    
+                            donnees_accX[0].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_GF[0].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_LF[0].append([LF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_dGF[0].append([dGF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            to_cancel[0].append([])    
                         elif block == 'sans':
-                            donnees_accX[name][1].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_GF[name][1].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_LF[name][1].append([LF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_dGF[name][1].append([dGF[st:e] for st,e in zip(cycle_starts,cycle_ends)])  
-                            to_cancel[name][1].append([])    
+                            donnees_accX[1].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_GF[1].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_LF[1].append([LF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_dGF[1].append([dGF[st:e] for st,e in zip(cycle_starts,cycle_ends)])  
+                            to_cancel[1].append([])    
                     elif hb == 'bas':
                         if block == 'avec':
-                            donnees_accX[name][2].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_GF[name][2].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_LF[name][2].append([LF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_dGF[name][2].append([dGF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            to_cancel[name][2].append([])     
+                            donnees_accX[2].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_GF[2].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_LF[2].append([LF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_dGF[2].append([dGF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            to_cancel[2].append([])     
                         elif block == 'sans':
-                            donnees_accX[name][3].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_GF[name][3].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_LF[name][3].append([LF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            donnees_dGF[name][3].append([dGF[st:e] for st,e in zip(cycle_starts,cycle_ends)])  
-                            to_cancel[name][3].append([])    
+                            donnees_accX[3].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_GF[3].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_LF[3].append([LF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
+                            donnees_dGF[3].append([dGF[st:e] for st,e in zip(cycle_starts,cycle_ends)])  
+                            to_cancel[3].append([])    
                 else:    
                     ax  = fig.subplots(3,1) 
                     

@@ -18,19 +18,19 @@ def superpose(Name,To_cancel,donnees_accX,donnees_GF,donnees_LF,donnees_dGF):
     global accX, GF, LF, dGF, name, to_cancel
          
     name = Name  
-    to_cancel = To_cancel[name] 
-    accX = donnees_accX[name]
-    GF = donnees_GF[name]
-    LF = donnees_LF[name]
-    dGF = donnees_dGF[name]
+    to_cancel = To_cancel 
+    accX = donnees_accX
+    GF = donnees_GF
+    LF = donnees_LF
+    dGF = donnees_dGF
     
     fig = plt.figure(figsize = [8,10])
     ax  = fig.subplots(4,2)
     
     fig.suptitle(name, fontsize=16)
     
-    ax[0,0].set_title("haut", fontsize=13)
-    ax[0,1].set_title("bas", fontsize=13)
+    ax[0,0].set_title("Haut", fontsize=14)
+    ax[0,1].set_title("Bas", fontsize=14)
     
     ax[0,0].set_ylabel("Acceleration [m/s^2]", fontsize=13)
     ax[1,0].set_ylabel("LF [N]", fontsize=13)

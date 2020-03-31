@@ -2,8 +2,27 @@
 """
 Created on Fri Mar 27 11:21:28 2020
 
-petit fichier hyper simple pour faire les plots
- 
+petit fichier hyper simple pour faire les plots 
+
+Mode d'emploi:
+    
+    - téléchargez tt les fichiers .glm et .txt du drive
+    
+    - créez un folder 'masses' et mettez y tt les fichiers .txt avec les masses,
+      puis renomez les alex, florent, victor et walid (sans majuscules)
+      
+    - supprimez l'espace qu'il y a comme premier caractère du fichier masses d'alexandre  
+    
+    - mettez tt les fichiers .glm ds un fichier 'mesures' (sauf les fichiers des coeffs de friction)
+    
+    - supprimez le premier fichier d'alex qui n'est pas bon (alex_haut_sans_001) et renomez
+      les autres pour que ça aille bien de 1 à 3 et pas de 2 à 4
+      
+    - créez un folder 'Add' ds le folder 'fichiers'  
+      
+    - ce fichier est là pour pouvoir utiliser les fonctions hyper facilement
+      mais si vous voulez lire les fonctions feel free to amuse yourself :) 
+    
 @author: Dany
 """
 import gbio_example_script_collisions_dany as gbio
@@ -11,10 +30,12 @@ import gbio_example_script_collisions_dany as gbio
 # il faut modifier ces variables pour dire quoi faire (add prévaut sur zoom)
 
 # mettre que les sujets dont on veut les plots
-names = ['walid'] # put the subjects' names in here
+names = ['victor','walid','alex'] # put the subjects' names in here
 
+# mettre True pour faire les moyennes sur les masses et superposer les courbes
 add = True
 
+# mettre True pour zoomer sur un choc en particulier
 zoom = False 
 chock = 'alex_haut_sans_001', 1 # choc sur lequel zoomer: bloc, choc    
 
