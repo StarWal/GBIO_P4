@@ -19,33 +19,27 @@ import derive as der
 import Add 
 
 # Fermeture des figures ouvertes
-plt.close('all')
-donnees_accX = None 
-donnees_GF = None 
-donnees_LF = None  
-donnees_dGF = None
-to_cancel = None
+plt.close('all') 
+donnees_accX = [[],[],[],[]] # haut avec, haut sans, bas avec, bas sans
+donnees_GF = [[],[],[],[]] 
+donnees_LF = [[],[],[],[]]  
+donnees_dGF = [[],[],[],[]] 
+to_cancel = [[],[],[],[]]
+delai = [[],[],[],[]]
 
 file=os.listdir("mesures") 
 subjects=[path.split('_')[0]+'_'+path.split('_')[1]+'_'+path.split('_')[2] for i,path in enumerate(file) if i%3 == 0] 
   
 # Double for-loop that runs through all subjects and trials 
-def make_plots(beginning,The_end,ntrials=3,Name='alex',add=False,zoom=False,chock_number=1,Trial=1):
+def make_plots(beginning,The_end,Name='alex',Delai=False,add=False,zoom=False,chock_number=1,Trial=0):
     global donnees_accX, donnees_GF, donnees_LF, donnees_dGF, to_cancel, subjects
     subjects = subjects[beginning:The_end]
-    if add:
-        for s in subjects:  
-            donnees_accX = [[],[],[],[]] # haut avec, haut sans, bas avec, bas sans
-            donnees_GF = [[],[],[],[]] 
-            donnees_LF = [[],[],[],[]]  
-            donnees_dGF = [[],[],[],[]] 
-            to_cancel = [[],[],[],[]] 
-    elif zoom: 
+    if zoom and (not add) and (not Delai): 
         subjects = [subjects]         
     for s in subjects:
         name,hb,block = s.split('_')[:3] 
-        for trial in range(1,ntrials+1): 
-            if (ntrials==1 and trial==Trial) or ntrials==3:
+        for trial in range(1,4): 
+            if trial==Trial or Trial==0:
                 # Set data path
                 glm_path = "mesures/%s_00%d.glm" % (s,trial)
                 
@@ -100,24 +94,24 @@ def make_plots(beginning,The_end,ntrials=3,Name='alex',add=False,zoom=False,choc
                 
                 start = time[cycle_starts[chock_number-1]] 
                 end = time[cycle_ends[chock_number-1]] 
-                    
+                       
                 #%% Compute derivative of LF
                 dGF=der.derive(GF,800)
                 dGF=glm.filter_signal(dGF, fs = freqAcq, fc = 10)
                 #%% Basic plot of the data 
                 fig = None ; ax = None
-                if zoom and (not add):
+                if zoom and (not add) and (not Delai):
                     fig = plt.figure(figsize = [3,12]) 
-                elif not add:
+                elif (not add) and (not Delai):
                     fig = plt.figure(figsize = [15,7])
-                if add:  
+                if add or Delai:  
                     if hb == 'haut': 
                         if block == 'avec':
                             donnees_accX[0].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
                             donnees_GF[0].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
                             donnees_LF[0].append([LF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
                             donnees_dGF[0].append([dGF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
-                            to_cancel[0].append([])    
+                            to_cancel[0].append([])  
                         elif block == 'sans':
                             donnees_accX[1].append([accX[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
                             donnees_GF[1].append([GF[st:e] for st,e in zip(cycle_starts,cycle_ends)]) 
@@ -167,7 +161,7 @@ def make_plots(beginning,The_end,ntrials=3,Name='alex',add=False,zoom=False,choc
                         ax[1].set_xlim([0,time[ipk[-1]+3200]])
                         ax[2].set_xlim([0,time[ipk[-1]+3200]]) 
                     
-                if (not zoom) and (not add):
+                if (not zoom) and (not add) and (not Delai):
                     # Putting grey patches for cycles
                     for i in range(0,len(cycle_starts)):
                         rect0=plt.Rectangle((time[cycle_starts[i]],ax[0].get_ylim()[0]),\
@@ -183,6 +177,7 @@ def make_plots(beginning,The_end,ntrials=3,Name='alex',add=False,zoom=False,choc
                     
                     fig.savefig("figures\%s_%d_acc_forces_dGF.png" %(s,trial)) 
                     
-    if add and __name__ != "__main__":
+    if add:
         Add.superpose(Name,to_cancel,donnees_accX,donnees_GF,donnees_LF,donnees_dGF)
-               
+    elif Delai:
+        Add.delai(Name)                                               
